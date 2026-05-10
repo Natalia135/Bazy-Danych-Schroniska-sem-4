@@ -1,0 +1,64 @@
+﻿<Window x:Class="Bazy_danych_Projekt.Views.WnioskiAdopcyjneWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Wnioski adopcyjne"
+        Height="600"
+        Width="900"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="20">
+
+        <DataGrid ItemsSource="{Binding Wnioski}"
+                  SelectedItem="{Binding WybranyWniosek}"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True">
+
+            <DataGrid.Columns>
+
+                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding Id}"
+                                    Width="60"/>
+
+                <DataGridTextColumn Header="Zwierzę"
+                                    Binding="{Binding Zwierze.Nazwa}"
+                                    Width="200"/>
+
+                <DataGridTextColumn Header="Użytkownik"
+                                    Binding="{Binding Uzytkownik.Imie}"
+                                    Width="200"/>
+
+                <DataGridTextColumn Header="Data"
+                                    Binding="{Binding DataAdopcji}"
+                                    Width="200"/>
+
+                <DataGridTextColumn Header="Status"
+                                    Binding="{Binding Status}"
+                                    Width="150"/>
+
+            </DataGrid.Columns>
+
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="0,0,0,10">
+
+            <Button Content="AKCEPTUJ"
+                    Width="140"
+                    Height="40"
+                    Margin="0,0,10,0"
+                    Command="{Binding AkceptujCommand}"/>
+
+            <Button Content="ODRZUĆ"
+                    Width="140"
+                    Height="40"
+                    Command="{Binding OdrzucCommand}"/>
+
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -1,0 +1,357 @@
+﻿<Window x:Class="Bazy_danych_Projekt.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Schronisko.pl" Height="900" Width="1200"
+        Background="#FAFAF8" FontFamily="Segoe UI" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <SolidColorBrush x:Key="BrandDark"   Color="#1A1A18"/>
+        <SolidColorBrush x:Key="BrandOlive"  Color="#6B7355"/>
+        <SolidColorBrush x:Key="BrandAccent" Color="#C0392B"/>
+        <SolidColorBrush x:Key="LightBg"     Color="#F3F1EA"/>
+        <SolidColorBrush x:Key="CardBg"      Color="#FFFFFF"/>
+        <SolidColorBrush x:Key="MutedText"   Color="#7A7A72"/>
+
+        <Style x:Key="OutlineBtn" TargetType="Button">
+            <Setter Property="Background"       Value="Transparent"/>
+            <Setter Property="BorderBrush"      Value="#CCCAC0"/>
+            <Setter Property="BorderThickness"  Value="1"/>
+            <Setter Property="Foreground"       Value="{StaticResource BrandDark}"/>
+            <Setter Property="FontSize"         Value="11"/>
+            <Setter Property="FontWeight"       Value="SemiBold"/>
+            <Setter Property="Padding"          Value="18,7"/>
+            <Setter Property="Cursor"           Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="18">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F0EEE8"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DarkBtn" TargetType="Button">
+            <Setter Property="Background"       Value="{StaticResource BrandDark}"/>
+            <Setter Property="BorderThickness"  Value="0"/>
+            <Setter Property="Foreground"       Value="White"/>
+            <Setter Property="FontSize"         Value="11"/>
+            <Setter Property="FontWeight"       Value="SemiBold"/>
+            <Setter Property="Padding"          Value="22,9"/>
+            <Setter Property="Cursor"           Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="18">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="AccentBtn" TargetType="Button" BasedOn="{StaticResource DarkBtn}">
+            <Setter Property="Background" Value="{StaticResource BrandAccent}"/>
+        </Style>
+
+        <Style x:Key="NavLink" TargetType="Button">
+            <Setter Property="Background"       Value="Transparent"/>
+            <Setter Property="BorderThickness"  Value="0"/>
+            <Setter Property="Foreground"       Value="{StaticResource BrandDark}"/>
+            <Setter Property="FontSize"         Value="13"/>
+            <Setter Property="Padding"          Value="12,6"/>
+            <Setter Property="Cursor"           Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="{StaticResource BrandOlive}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="HideIfLoggedIn" TargetType="FrameworkElement">
+            <Setter Property="Visibility" Value="Visible"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CzyKtosZalogowany}" Value="True">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Header -->
+            <RowDefinition Height="*"/>
+            <!-- Content  -->
+            <RowDefinition Height="Auto"/>
+            <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- 1. HEADER & NAV  -->
+        <StackPanel Grid.Row="0" Background="White">
+            <!-- ANNOUNCEMENT BAR -->
+            <Border Background="{StaticResource BrandDark}" Height="34">
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Foreground="White" FontSize="11">
+                    A d o p c j a  t o  m i ł o ś ć   •   
+                    O t w i e r a m y  n o w e  s c h r o n i s k a   •   
+                    W o l o n t a r i a t  w e e k e n d o w y
+                </TextBlock>
+            </Border>
+
+            <!-- MAIN HEADER CONTENT -->
+            <Border BorderBrush="#E8E6DF" BorderThickness="0,0,0,1">
+                <!-- KONTENER CENTRUJĄCY  -->
+                <Grid Height="70" MaxWidth="1200" Margin="20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" VerticalAlignment="Center"
+                               FontSize="20" FontWeight="Bold" FontFamily="Georgia"
+                               Foreground="{StaticResource BrandDark}"
+                               Text="S C H R O N I S K O"/>
+
+                    <!-- Search bar -->
+                    <Border Grid.Column="1" Margin="40,0" VerticalAlignment="Center"
+                            Background="#F3F1EA" CornerRadius="20" Height="38" MaxWidth="600">
+                        <Grid Margin="16,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding TekstWyszukiwania, UpdateSourceTrigger=PropertyChanged}" 
+                                     Grid.Column="0" Background="Transparent" BorderThickness="0"
+                                     VerticalAlignment="Center" FontSize="13"
+                                     Foreground="{StaticResource BrandDark}"/>
+                            <TextBlock Grid.Column="1" Text="🔍" FontSize="14"
+                                       VerticalAlignment="Center" Margin="8,0,0,0" Opacity="0.5"/>
+                        </Grid>
+                    </Border>
+
+                    <!-- Action buttons -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="{Binding ZalogowanyUzytkownik.Imie}"
+                                   VerticalAlignment="Center" Margin="0,0,12,0"
+                                   FontSize="13" FontWeight="SemiBold"
+                                   Foreground="{StaticResource BrandOlive}"/>
+                        <Button Content="ZALOGUJ SIĘ"
+                                Command="{Binding OtworzLogowanieCommand}"
+                                Style="{StaticResource HideIfLoggedIn}"
+                                Background="{StaticResource BrandAccent}"
+                                Foreground="White" BorderThickness="0"
+                                FontSize="11" FontWeight="SemiBold" Padding="16,8" Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="18" Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                        <Button Content="WYLOGUJ"
+                                Command="{Binding WylogujCommand}"
+                                Style="{StaticResource OutlineBtn}" Margin="8,0,0,0"
+                                Visibility="{Binding CzyKtosZalogowany, Converter={StaticResource BoolToVis}}"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- CATEGORY NAV -->
+            <Border BorderBrush="#E8E6DF" BorderThickness="0,0,0,1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="44">
+                    <Button Content="Psy ▾"              Style="{StaticResource NavLink}"/>
+                    <Button Content="Koty ▾"             Style="{StaticResource NavLink}"/>
+                    <Button Content="Małe zwierzęta ▾"   Style="{StaticResource NavLink}"/>
+                    <Button Content="Wolontariat"        Style="{StaticResource NavLink}"/>
+                    <Button Content="O nas"              Style="{StaticResource NavLink}"/>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <!-- 2. SCROLLABLE CONTENT -->
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <!-- KONTENER CENTRUJĄCY DLA TREŚCI -->
+            <StackPanel MaxWidth="1200" Margin="20,0">
+
+                <!-- BANNER -->
+                <Grid Height="340" Margin="0,20">
+                    <Border CornerRadius="16" ClipToBounds="True">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Color="#B5B39E" Offset="0"/>
+                                <GradientStop Color="#6B7355" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <StackPanel VerticalAlignment="Center" Margin="60,0,0,0">
+                            <TextBlock FontFamily="Georgia" FontSize="13" Foreground="White"
+                                       Opacity="0.8" Margin="0,0,0,6"
+                                       Text="S C H R O N I S K O . P L  A D O P T U J E"/>
+                            <TextBlock FontFamily="Georgia" FontSize="46" Foreground="White"
+                                       FontStyle="Italic" LineHeight="52">
+                                <Run Text="Znajdź"/>
+                                <Run Text=" Przyjaciela"/>
+                            </TextBlock>
+                            <TextBlock Text="Daj dom tym, którzy kochają bezwarunkowo."
+                                       Foreground="White" FontSize="15" Margin="0,12,0,28"
+                                       Opacity="0.85"/>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="PRZEGLĄDAJ ZWIERZĘTA"
+                                        Style="{StaticResource DarkBtn}" Margin="0,0,12,0"/>
+                                <Button Content="+ DODAJ ZWIERZĘ"
+                                        Command="{Binding OtworzDodawanieCommand}"
+                                        Style="{StaticResource OutlineBtn}"
+                                        Foreground="White" BorderBrush="#FFFFFF88"
+                                        Visibility="{Binding CzySchronisko, Converter={StaticResource BoolToVis}}"/>
+                                <Button Content="WNIOSKI ADOPCYJNE"
+                                        Command="{Binding OtworzWnioskiCommand}"
+                                        Style="{StaticResource OutlineBtn}"
+                                        Foreground="White" BorderBrush="#FFFFFF88"
+                                        Visibility="{Binding CzySchronisko, Converter={StaticResource BoolToVis}}"
+                                        Margin="12,0,12,0" Cursor="Hand" />        
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <!-- VALUE PROPS -->
+                <Border Background="White" Padding="40,30" CornerRadius="12" Margin="0,0,0,20">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                            <TextBlock FontFamily="Georgia" FontSize="22" Foreground="{StaticResource BrandDark}">
+                                <Run Text="Nasze " FontStyle="Normal"/>
+                                <Run Text="Wartości" FontStyle="Italic"/>
+                            </TextBlock>
+                            <TextBlock Text="Przejrzystość i troska — bez kompromisów."
+                                       FontSize="12" Foreground="{StaticResource MutedText}"
+                                       TextWrapping="Wrap" Margin="0,6,0,0"/>
+                        </StackPanel>
+                        <UniformGrid Grid.Column="1" Columns="4" Margin="20,0,0,0">
+                            
+                            <StackPanel Margin="8,0" HorizontalAlignment="Center">
+                                <Border Width="44" Height="44" CornerRadius="22" Background="{StaticResource LightBg}" Margin="0,0,0,10" HorizontalAlignment="Center">
+                                    <TextBlock Text="🐾" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="Zweryfikowane schroniska" FontWeight="SemiBold" FontSize="12" TextAlignment="Center" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <StackPanel Margin="8,0" HorizontalAlignment="Center">
+                                <Border Width="44" Height="44" CornerRadius="22" Background="{StaticResource LightBg}" Margin="0,0,0,10" HorizontalAlignment="Center">
+                                    <TextBlock Text="📋" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="Prosta adopcja" FontWeight="SemiBold" FontSize="12" TextAlignment="Center" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <StackPanel Margin="8,0" HorizontalAlignment="Center">
+                                <Border Width="44" Height="44" CornerRadius="22" Background="{StaticResource LightBg}" Margin="0,0,0,10" HorizontalAlignment="Center">
+                                    <TextBlock Text="❤️" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="Dobrane przez ludzi" FontWeight="SemiBold" FontSize="12" TextAlignment="Center" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            <StackPanel Margin="8,0" HorizontalAlignment="Center">
+                                <Border Width="44" Height="44" CornerRadius="22" Background="{StaticResource LightBg}" Margin="0,0,0,10" HorizontalAlignment="Center">
+                                    <TextBlock Text="🏡" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <TextBlock Text="Zmień życie" FontWeight="SemiBold" FontSize="12" TextAlignment="Center" TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </UniformGrid>
+                    </Grid>
+                </Border>
+
+                <!-- ANIMAL GRID -->
+                <StackPanel Margin="0,20">
+                    <Grid Margin="0,0,0,28">
+                        <StackPanel HorizontalAlignment="Left">
+                            <TextBlock FontFamily="Georgia" FontSize="28" Foreground="{StaticResource BrandDark}">
+                                <Run Text="Nasi " FontStyle="Normal"/>
+                                <Run Text="Podopieczni" FontStyle="Italic"/>
+                            </TextBlock>
+                            <TextBlock Text="Złożeni nam w opiekę — czekają na swój dom."
+                                       FontSize="12" Foreground="{StaticResource MutedText}" Margin="0,4,0,0"/>
+                        </StackPanel>
+                        <Button Content="PRZEGLĄDAJ WSZYSTKIE →"
+                                Style="{StaticResource AccentBtn}"
+                                HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                    </Grid>
+
+                    <ItemsControl ItemsSource="{Binding WidoczneZwierzeta}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="4"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="8" Background="White" CornerRadius="12" BorderBrush="#E8E6DF" BorderThickness="1">                                    
+                                    <StackPanel>                                       
+                                        <Border Padding="12">
+                                            <StackPanel>
+                                                <Border Height="180" Background="#F3F1EA" CornerRadius="8" Margin="0,0,0,12">
+                                                    <TextBlock Text="🐶" FontSize="48" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0.2"/>
+                                                </Border>
+
+                                                <TextBlock Text="{Binding Rasa}" FontSize="10" FontWeight="Bold" Foreground="{StaticResource BrandOlive}"/>
+                                                <TextBlock Text="{Binding Nazwa}" FontSize="16" FontWeight="Bold" Foreground="{StaticResource BrandDark}"/>
+                                                <TextBlock Text="{Binding CenaAdopcji, StringFormat='{}{0:C}'}" FontSize="13" Margin="0,4,0,12"/>
+
+                                                <Button Content="WIĘCEJ SZCZEGÓŁÓW" Style="{StaticResource OutlineBtn}"
+                                                    Command="{Binding DataContext.PokazSzczegolyCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                    CommandParameter="{Binding}"/>          
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <Border Height="40"/>
+                
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- 3. FOOTER  -->
+        <Border Grid.Row="2" Background="{StaticResource BrandDark}" Padding="0,24">
+            <Grid MaxWidth="1200" Margin="20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Text="© 2026 Schronisko.pl — Daj im dom." FontSize="12"
+                           Foreground="#888884" VerticalAlignment="Center"
+                           FontFamily="Georgia" FontStyle="Italic"/>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                    <TextBlock Text="Polityka prywatności" FontSize="11" Foreground="#888884" Margin="0,0,20,0" VerticalAlignment="Center"/>
+                    <TextBlock Text="Kontakt" FontSize="11" Foreground="#888884" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

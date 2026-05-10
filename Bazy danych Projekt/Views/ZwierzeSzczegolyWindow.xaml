@@ -1,0 +1,154 @@
+﻿<Window x:Class="Bazy_danych_Projekt.Views.ZwierzeSzczegolyWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Karta podopiecznego" Width="480" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner" Background="#FAFAF8" FontFamily="Segoe UI">
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <Style x:Key="OutlineBtn" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#CCCAC0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#1A1A18"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="18,7"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="18">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Border Background="White" Padding="36">
+        <StackPanel>
+            <TextBlock Text="{Binding WybraneZwierze.Nazwa}" FontFamily="Georgia" FontSize="32" FontStyle="Italic" FontWeight="Bold" Foreground="#1A1A18"/>
+            <TextBlock Text="{Binding WybraneZwierze.Gatunek}" FontSize="14" Foreground="#7A7A72" Margin="0,0,0,25"/>
+
+            <Grid Margin="0,0,0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="RASA" FontSize="11" Foreground="#999990" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding WybraneZwierze.Rasa}" FontSize="14" Foreground="#1A1A18" TextWrapping="WrapWithOverflow"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="WIEK" FontSize="11" Foreground="#999990" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding WybraneZwierze.Wiek}" FontSize="14" Foreground="#1A1A18"/>
+                </StackPanel>
+                <StackPanel Grid.Column="2">
+                    <TextBlock Text="PŁEĆ" FontSize="11" Foreground="#999990" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding WybraneZwierze.Plec}" FontSize="14" Foreground="#1A1A18"/>
+                </StackPanel>
+                <StackPanel Grid.Column="3">
+                    <TextBlock Text="WAGA" FontSize="11" Foreground="#999990" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding WybraneZwierze.Waga, StringFormat={}{0} kg}" FontSize="14" Foreground="#1A1A18"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Margin="0,0,0,25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0">
+                    <TextBlock Text="ZASZCZEPIONY/ODROBACZONY" FontSize="11" Foreground="#999990" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding SzczepionyTekst}" FontSize="14" Foreground="#1A1A18"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="WYKASTROWANY" FontSize="11" Foreground="#999990" FontWeight="SemiBold"/>
+                    <TextBlock Text="{Binding KastrowanyTekst}" FontSize="14" Foreground="#1A1A18"/>
+                </StackPanel>
+            </Grid>
+
+            <TextBlock Text="O ZWIERZAKU" FontSize="11" Foreground="#999990" FontWeight="SemiBold"/>
+            <TextBlock Text="{Binding WybraneZwierze.Opis}" FontSize="14" TextWrapping="Wrap" Foreground="#1A1A18" Margin="0,5,0,25" LineHeight="20"/>
+
+            <Border Height="1" Background="#E8E6DF" Margin="0,0,0,20"/>
+
+            <TextBlock Text="ZNAJDUJE SIĘ W OPIECE:" FontSize="11" Foreground="#999990" FontWeight="SemiBold" Margin="0,0,0,10"/>
+            <Border Background="#FAFAF8" BorderBrush="#E8E6DF" BorderThickness="1" CornerRadius="8" Padding="15" Margin="0,0,0,25">
+                <StackPanel>
+                    <TextBlock Text="{Binding WybraneZwierze.Schronisko.Nazwa}" FontSize="15" FontWeight="Bold" Foreground="#1A1A18" Margin="0,0,0,5"/>
+                    <TextBlock Text="{Binding WybraneZwierze.Schronisko.Adres}" FontSize="13" Foreground="#7A7A72"/>
+                    <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                        <TextBlock Text="☎ Telefon:" FontSize="13" Foreground="#7A7A72" Width="80"/>
+                        <TextBlock Text="{Binding WybraneZwierze.Schronisko.Telefon}" FontSize="13" Foreground="#1A1A18" FontWeight="SemiBold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,3,0,0">
+                        <TextBlock Text="WNI:" FontSize="13" Foreground="#7A7A72" Width="80"/>
+                        <TextBlock Text="{Binding WybraneZwierze.Schronisko.NumerWNI}" FontSize="13" Foreground="#1A1A18"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <TextBlock HorizontalAlignment="Center" Margin="0,0,0,10">
+                <Run Text="Opłata adopcyjna: " FontSize="14" Foreground="#7A7A72"/>
+                <Run Text="{Binding WybraneZwierze.CenaAdopcji}" FontSize="18" FontWeight="Bold" Foreground="#1A1A18"/>
+                <Run Text=" PLN" FontSize="14" FontWeight="Bold" Foreground="#1A1A18"/>
+            </TextBlock>
+
+            <Button Visibility="{Binding CzyPokazacPrzyciskAdopcji, Converter={StaticResource BoolToVis}}" 
+                    Command="{Binding AdoptujCommand}" Height="44" Margin="0,0,0,10" BorderThickness="0">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="#C0392B" CornerRadius="18">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="ADOPTUJ TERAZ" TextElement.Foreground="White" TextElement.FontWeight="Bold"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Border Visibility="{Binding CzyMozeEdytowac, Converter={StaticResource BoolToVis}}" 
+                    Background="#FFF5F5" CornerRadius="12" Padding="15" Margin="0,0,0,20" BorderBrush="#FFDADA" BorderThickness="1">
+                <StackPanel>
+                    <TextBlock Text="NARZĘDZIA SCHRONISKA" FontSize="11" FontWeight="Bold" Foreground="#C0392B" Margin="0,0,0,12"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" Command="{Binding EdytujZwierzeCommand}" Content="EDYTUJ DANE" Height="36" Style="{StaticResource OutlineBtn}"/>
+
+                        <Button Grid.Column="2" Command="{Binding UsunZwierzeCommand}" Height="36">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="BtnBorder" Background="Transparent" BorderBrush="#C0392B" BorderThickness="1" CornerRadius="18">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" Content="USUŃ Z OPIEKI" TextElement.Foreground="#C0392B" TextElement.FontWeight="SemiBold"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="BtnBorder" Property="Background" Value="#C0392B"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="BtnBorder" Property="Background" Value="#A93226"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Button Command="{Binding ZamknijCommand}" Content="ZAMKNIJ" Height="38" Style="{StaticResource OutlineBtn}"/>
+        </StackPanel>
+    </Border>
+</Window>
