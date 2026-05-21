@@ -23,6 +23,6 @@ namespace Bazy_danych_Projekt.Models
         public DateTime DataAdopcji { get; set; } = DateTime.Now;
 
         public string Status { get; set; } = "OCZEKUJE";
-        // np. OCZEKUJE / ZAAKCEPTOWANA / ODRZUCONA
+        // OCZEKUJE / ZAAKCEPTOWANA / ODRZUCONA
     }
 }

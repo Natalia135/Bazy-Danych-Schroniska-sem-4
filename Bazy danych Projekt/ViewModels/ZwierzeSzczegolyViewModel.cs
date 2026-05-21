@@ -31,6 +31,11 @@ namespace Bazy_danych_Projekt.ViewModels
         public string KastrowanyTekst => WybraneZwierze?.CzyKastrowany == true ? "Tak" : "Nie";
         public string SzczepionyTekst => WybraneZwierze?.CzySzczepiony == true ? "Tak" : "Nie";
 
+        // STATUS ADOPCJI
+        public bool CzyMoznaAdoptowac => WybraneZwierze != null && WybraneZwierze.Status == StatusZwierzecia.DO_ADOPCJI;
+        public bool CzyWTrakcie => WybraneZwierze?.Status == StatusZwierzecia.W_TRAKCIE_ADOPCJI;
+        public bool CzyAdoptowane => WybraneZwierze?.Status == StatusZwierzecia.ADOPTOWANY;
+
         public ZwierzeSzczegolyViewModel(SchroniskoDbContext dbContext, IServiceProvider serviceProvider)
         {
             _dbContext = dbContext;
@@ -42,6 +47,9 @@ namespace Bazy_danych_Projekt.ViewModels
         {
             OnPropertyChanged(nameof(KastrowanyTekst));
             OnPropertyChanged(nameof(SzczepionyTekst));
+            OnPropertyChanged(nameof(CzyMoznaAdoptowac));
+            OnPropertyChanged(nameof(CzyWTrakcie));
+            OnPropertyChanged(nameof(CzyAdoptowane));
         }
 
         public Action ZamknijOkno { get; set; }
@@ -69,7 +77,7 @@ namespace Bazy_danych_Projekt.ViewModels
 
             _dbContext.Adopcje.Add(adopcja);
 
-            WybraneZwierze.Status = "W TRAKCIE ADOPCJI";
+            WybraneZwierze.Status = StatusZwierzecia.W_TRAKCIE_ADOPCJI;
             _dbContext.Zwierzeta.Update(WybraneZwierze);
 
             _dbContext.SaveChanges();

@@ -167,7 +167,11 @@ namespace Bazy_danych_Projekt.ViewModels
         // --- METODY POMOCNICZE ---
         private async Task WczytajZwierzetaAsync()
         {
-            var dane = await _dbContext.Zwierzeta.Include(z => z.Schronisko).ToListAsync();
+            //var dane = await _dbContext.Zwierzeta.Include(z => z.Schronisko).ToListAsync();
+            var dane = await _dbContext.Zwierzeta
+                    .Include(z => z.Schronisko)
+                    .Where(z => z.Status != StatusZwierzecia.ADOPTOWANY)
+                    .ToListAsync();
             ZwierzetaLista.Clear();
             foreach (var z in dane) ZwierzetaLista.Add(z);
             OnPropertyChanged(nameof(WidoczneZwierzeta));
@@ -223,7 +227,7 @@ namespace Bazy_danych_Projekt.ViewModels
                     Nazwa = "Burek",
                     Gatunek = "Pies",
                     Rasa = "Mieszaniec",
-                    Status = "DO ADOPCJI",
+                    Status = StatusZwierzecia.DO_ADOPCJI,
                     SchroniskoId = schronisko.Id,
                     Wiek = "3 lata",
                     Plec = "Samiec",
@@ -237,7 +241,7 @@ namespace Bazy_danych_Projekt.ViewModels
                     Nazwa = "Luna",
                     Gatunek = "Pies",
                     Rasa = "Owczarek",
-                    Status = "DO ADOPCJI",
+                    Status = StatusZwierzecia.DO_ADOPCJI,
                     SchroniskoId = schronisko.Id,
                     Wiek = "5 miesięcy",
                     Plec = "Samica",

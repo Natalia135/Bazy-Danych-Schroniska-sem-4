@@ -89,7 +89,7 @@ namespace Bazy_danych_Projekt.ViewModels
                         Gatunek = NowyGatunek,
                         Rasa = NowaRasa ?? "Mieszaniec",
                         CenaAdopcji = NowaCena,
-                        Status = "DO ADOPCJI",
+                        Status = StatusZwierzecia.DO_ADOPCJI,
                         SchroniskoId = ZalogowaneSchroniskoId,
                         Wiek = NowyWiek ?? "Nieznany",
                         Plec = NowaPlec,

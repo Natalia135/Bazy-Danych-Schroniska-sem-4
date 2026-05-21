@@ -12,9 +12,10 @@ namespace Bazy_danych_Projekt.Models
         public string Gatunek { get; set; }
         public string Rasa { get; set; }
         public decimal CenaAdopcji { get; set; }
-        public string Status { get; set; }
+        //public string Status { get; set; }
+        public StatusZwierzecia Status { get; set; }
 
-        
+
         public int? SchroniskoId { get; set; }
 
         [ForeignKey("SchroniskoId")]

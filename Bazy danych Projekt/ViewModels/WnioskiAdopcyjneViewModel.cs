@@ -41,14 +41,14 @@ namespace Bazy_danych_Projekt.ViewModels
         {
             if (_wybranyWniosek == null) return;
 
-            _wybranyWniosek.Status = "ZAAKCEPTOWANO";
+            _wybranyWniosek.Status = "ZAAKCEPTOWANY";
 
             var zwierze = _db.Zwierzeta
                 .FirstOrDefault(z => z.Id == _wybranyWniosek.ZwierzeId);
 
             if (zwierze != null)
             {
-                zwierze.Status = "ZAADOPTOWANY";
+                zwierze.Status = StatusZwierzecia.ADOPTOWANY;
             }
 
             _db.SaveChanges();
@@ -70,7 +70,7 @@ namespace Bazy_danych_Projekt.ViewModels
 
             if (zwierze != null)
             {
-                zwierze.Status = "DOSTĘPNY";
+                zwierze.Status = StatusZwierzecia.DO_ADOPCJI;
             }
 
             _db.SaveChanges();

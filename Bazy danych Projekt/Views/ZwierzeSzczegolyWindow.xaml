@@ -102,7 +102,8 @@
                 <Run Text=" PLN" FontSize="14" FontWeight="Bold" Foreground="#1A1A18"/>
             </TextBlock>
 
-            <Button Visibility="{Binding CzyPokazacPrzyciskAdopcji, Converter={StaticResource BoolToVis}}" 
+            <!-- DO ADOPCJI -->
+            <Button Visibility="{Binding CzyMoznaAdoptowac, Converter={StaticResource BoolToVis}}"  
                     Command="{Binding AdoptujCommand}" Height="44" Margin="0,0,0,10" BorderThickness="0">
                 <Button.Template>
                     <ControlTemplate TargetType="Button">
@@ -112,6 +113,20 @@
                     </ControlTemplate>
                 </Button.Template>
             </Button>
+
+            <!-- W TRAKCIE -->
+            <Border
+                Visibility="{Binding CzyWTrakcie, Converter={StaticResource BoolToVis}}"
+                Background="#F39C12"
+                CornerRadius="18"
+                Height="44"
+                HorizontalAlignment="Stretch">      
+                <TextBlock Text="W TRAKCIE ADOPCJI"
+                   Foreground="White"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+            </Border>
 
             <Border Visibility="{Binding CzyMozeEdytowac, Converter={StaticResource BoolToVis}}" 
                     Background="#FFF5F5" CornerRadius="12" Padding="15" Margin="0,0,0,20" BorderBrush="#FFDADA" BorderThickness="1">
